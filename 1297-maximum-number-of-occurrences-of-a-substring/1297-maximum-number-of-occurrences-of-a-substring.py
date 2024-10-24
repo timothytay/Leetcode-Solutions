@@ -7,9 +7,11 @@ class Solution(object):
         :type maxSize: int
         :rtype: int
         """
+        maxFreq = 0
         freqs = {}
-        for l in range(len(s)-minSize+1):
-            slic = s[l:l+minSize]
-            if len(set(slic)) <= maxLetters:
-                freqs[slic] = 1 + freqs.get(slic, 0)
-        return max(freqs.values()) if freqs.values() else 0
+        for l in range(len(s) - minSize + 1):
+            if len(set(s[l:l+minSize])) <= maxLetters:
+                freqs[s[l:l+minSize]] = 1 + freqs.get(s[l:l+minSize], 0)
+                maxFreq = max(freqs[s[l:l+minSize]], maxFreq)
+        return maxFreq
+                    
