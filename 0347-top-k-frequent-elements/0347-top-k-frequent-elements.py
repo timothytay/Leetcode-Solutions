@@ -10,12 +10,12 @@ class Solution(object):
         freqs = {}
         for num in nums:
             freqs[num] = 1 + freqs.get(num, 0)
-        hp = []
+        heap = []
         for num, freq in freqs.items():
-            heapq.heappush(hp, (freq, num))
-            if len(hp) > k:
-                heapq.heappop(hp)
+            heapq.heappush(heap, (freq, num))
+            if len(heap) > k:
+                heapq.heappop(heap)
         res = []
-        for freq, num in hp:
+        for freq, num in heap: 
             res.append(num)
         return res
