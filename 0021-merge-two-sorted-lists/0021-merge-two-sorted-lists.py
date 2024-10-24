@@ -10,20 +10,13 @@ class Solution(object):
         :type list2: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
-        dummy = ListNode()
-        prev = dummy
-        node1 = list1
-        node2 = list2
-        while node1 and node2:
-            if node1.val < node2.val:
-                prev.next = node1
-                node1 = node1.next
-            else:
-                prev.next = node2
-                node2 = node2.next
-            prev = prev.next
-        if node1:
-            prev.next = node1
-        if node2:
-            prev.next = node2
-        return dummy.next
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1, list2.next)
+            return list2 
