@@ -5,28 +5,19 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        index = 0
-        mini = nums[0]
         l, r = 0, len(nums) - 1
         while l <= r:
             m = (l+r)//2
-            if nums[m] < mini:
-                index = m
-                mini = nums[m]
+            if nums[m] == target:
+                return m
             elif nums[m] < nums[r]:
-                r = m - 1
-            else:
-                l = m + 1
-        def binarySearch(l, r, target):
-            while l <= r:
-                m = (l+r)//2
-                if nums[m] == target:
-                    return m
-                if target > nums[m]:
+                if nums[m] < target <= nums[r]:
                     l = m + 1
                 else:
                     r = m - 1
-            return -1
-        left = binarySearch(0, index - 1, target)
-        right = binarySearch(index, len(nums)-1, target)
-        return left if left != -1 else right
+            else:
+                if nums[l] <= target < nums[m]:
+                    r = m - 1
+                else:
+                    l = m + 1
+        return -1
