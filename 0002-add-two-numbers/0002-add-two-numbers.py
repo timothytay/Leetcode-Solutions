@@ -10,45 +10,18 @@ class Solution(object):
         :type l2: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
+        dummy = ListNode()
+        cur = dummy
         cur1 = l1
         cur2 = l2
-        dummy = ListNode
-        curRes = dummy
         carry = 0
-        while cur1 and cur2:
-            res = cur1.val + cur2.val + carry
-            carry = 0
-            if res >= 10:
-                res -= 10
-                carry = 1
-            curRes.next = ListNode(res)
-            curRes = curRes.next
-            cur1 = cur1.next
-            cur2 = cur2.next
-
-        while cur1:
-            res = cur1.val + carry
-            carry = 0
-            if res >= 10:
-                res -= 10
-                carry = 1
-            curRes.next = ListNode(res)
-            curRes = curRes.next
-
-            cur1 = cur1.next
-
-        while cur2:
-            res = cur2.val + carry
-            carry = 0
-            if res >= 10:
-                res -= 10
-                carry = 1
-            curRes.next = ListNode(res)
-            curRes = curRes.next
-
-            cur2 = cur2.next
-
-        if carry == 1:
-            curRes.next = ListNode(carry)
-
+        while cur1 or cur2 or carry != 0:
+            cur1Val = cur1.val if cur1 else 0
+            cur2Val = cur2.val if cur2 else 0
+            res = cur1Val + cur2Val + carry
+            carry = res // 10
+            cur.next = ListNode(res % 10)
+            cur = cur.next
+            cur1 = cur1.next if cur1 else None
+            cur2 = cur2.next if cur2 else None
         return dummy.next
