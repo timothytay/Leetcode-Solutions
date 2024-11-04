@@ -4,7 +4,7 @@ class Solution(object):
         :type heights: List[List[int]]
         :rtype: List[List[int]]
         """
-        canReach = []
+        canReach = set()
         visit = set()
         def dfsPacific(heights, r, c, visit, prevHeight):
             rows = len(heights)
@@ -13,6 +13,8 @@ class Solution(object):
                 return True
             if r == rows or c == cols or heights[r][c] > prevHeight or (r, c) in visit:
                 return False
+            if (r, c) in canReach:
+                return True
             visit.add((r, c))
             hasPath = dfsPacific(heights, r+1, c, visit, heights[r][c]) or dfsPacific(heights, r-1, c, visit, heights[r][c]) or dfsPacific(heights, r, c+1, visit, heights[r][c]) or dfsPacific(heights, r, c-1, visit, heights[r][c])
             visit.remove((r, c))
@@ -25,6 +27,8 @@ class Solution(object):
                 return True
             if min(r, c) < 0 or heights[r][c] > prevHeight or (r, c) in visit:
                 return False
+            if (r, c) in canReach:
+                return True
             visit.add((r, c))
             hasPath = dfsAtlantic(heights, r+1, c, visit, heights[r][c]) or dfsAtlantic(heights, r-1, c, visit, heights[r][c]) or dfsAtlantic(heights, r, c+1, visit, heights[r][c]) or dfsAtlantic(heights, r, c-1, visit, heights[r][c])
             visit.remove((r, c))
@@ -33,5 +37,9 @@ class Solution(object):
         for row in range(len(heights)):
             for col in range(len(heights[0])):
                 if dfsAtlantic(heights, row, col, visit, float('inf')) and dfsPacific(heights, row, col, visit, float('inf')):
-                    canReach.append([row, col])
-        return canReach
+                    canReach.add((row, col))
+        
+        res = []
+        for r, c in canReach:
+            res.append([r, c])
+        return res
