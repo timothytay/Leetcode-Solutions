@@ -5,15 +5,15 @@ class Solution(object):
         :rtype: int
         """
         
-        memo = {}
-        def climb(n):
-            if n < 0:
-                return 0
-            if n == 0:
-                return 1
-            if n in memo:
-                return memo[n]
-            memo[n] = climb(n-1) + climb(n-2)
-            return memo[n]
+        dp = [0, 0]
+        dp[1] = 1
+        dp[0] = 1
+        counter = n - 2
+        while counter >= 0:
+            tmp = dp[0]
+            dp[0] = dp[1] + dp[0]
+            dp[1] = tmp
 
-        return climb(n)
+            counter -= 1
+        return dp[0]
+        
