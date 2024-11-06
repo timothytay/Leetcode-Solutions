@@ -4,16 +4,9 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        
-
-        if len(nums) < 2:
-            return nums[0]
-        
-        for i in range(len(nums)-3, -1, -1):
-            nums[i] = nums[i] + max(nums[i+2], (nums[i+3] if i + 3 < len(nums) else 0))
-
-        return max(nums[0], nums[1])
-
-        
-
-        
+        rob1, rob2 = 0, 0
+        for i in range(len(nums)):
+            temp = rob2
+            rob2 = max(rob1 + nums[i], rob2)
+            rob1 = temp
+        return rob2
