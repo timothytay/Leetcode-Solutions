@@ -4,17 +4,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        memo = {}
         if len(nums) == 1:
             return nums[0]
-        def robHouse(house, zero):
-            if house >= len(nums):
-                return 0
-            if zero and house == len(nums) - 1:
-                return 0
-            if (house, zero) in memo:
-                return memo[(house, zero)]
-            memo[(house, zero)] = nums[house] + max(robHouse(house+2, zero), robHouse(house+3, zero))
-            return memo[(house, zero)]
+        dp1 = nums[:-1]
+        dp2 = nums[1:]
 
-        return max(robHouse(0, True), robHouse(1, False), robHouse(2, False))
+        for i in range(len(dp1)-3, -1, -1):
+            dp1[i] = dp1[i] + max(dp1[i+2], dp1[i+3] if i + 3 < len(dp1) else 0)
+
+        for i in range(len(dp2)-3, -1, -1):
+            dp2[i] = dp2[i] + max(dp2[i+2], dp2[i+3] if i + 3 < len(dp1) else 0)
+
+        return max(dp1[0] if dp1 else 0, dp1[1] if len(dp1) > 1 else 0, dp2[0] if dp2 else 0, dp2[1] if len(dp2) > 1 else 0)
