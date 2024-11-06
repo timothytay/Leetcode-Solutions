@@ -15,4 +15,4 @@ class Solution(object):
         for i in range(len(dp2)-3, -1, -1):
             dp2[i] = dp2[i] + max(dp2[i+2], dp2[i+3] if i + 3 < len(dp1) else 0)
 
-        return max(dp1[0] if dp1 else 0, dp1[1] if len(dp1) > 1 else 0, dp2[0] if dp2 else 0, dp2[1] if len(dp2) > 1 else 0)
+        return max(dp1[:2] + dp2[:2])
