@@ -6,7 +6,7 @@ class Solution(object):
         """
         nums = set(nums)
 
-        for i in range(1, len(nums)+1):
+        for i in range(1, len(nums)+2):
             if i not in nums:
                 return i
          
