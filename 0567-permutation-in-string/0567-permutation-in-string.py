@@ -5,6 +5,8 @@ class Solution(object):
         :type s2: str
         :rtype: bool
         """
+        if len(s2) < len(s1):
+            return False
         s1dict = {}
         for char in s1:
             s1dict[char] = 1 + s1dict.get(char, 0)
