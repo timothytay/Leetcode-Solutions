@@ -8,8 +8,9 @@ class Solution:
 
         for i in range(1, len(nums)):
             
-            maximum = max(nums[i] * maximum, nums[i] * minimum, nums[i])
+            tempMaximum = max(nums[i] * maximum, nums[i] * minimum, nums[i])
             minimum = min(nums[i] * maximum, nums[i] * minimum, nums[i])
+            
+            maximum = tempMaximum
             maxProd = max(maximum, maxProd)
-
         return maxProd
