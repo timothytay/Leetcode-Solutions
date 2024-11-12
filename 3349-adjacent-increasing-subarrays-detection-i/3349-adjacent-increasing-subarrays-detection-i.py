@@ -1,17 +1,14 @@
 class Solution:
     def hasIncreasingSubarrays(self, nums: List[int], k: int) -> bool:
-        for i in range(len(nums)):
-            isIncreasing = True
-            for j in range(1, k):
-                if i + j >= len(nums) or i + j < len(nums) and nums[i+j] <= nums[i+j-1]:
-                    isIncreasing = False
-                    break
+        dp = [1] * len(nums)
+        for i in range(len(dp) - 2, -1, -1):
+            if nums[i+1] > nums[i]:
+                dp[i] = 1 + dp[i+1]
 
-            for j in range(k+1, 2 * k):
-                if i + j >= len(nums) or i + j < len(nums) and nums[i+j] <= nums[i+j-1]:
-                    isIncreasing = False
-                    break
-            if isIncreasing:
+        for i in range(len(dp)):
+            if dp[i] >= 2 * k:
                 return True
-        
+            if dp[i] >= k and i + k < len(dp) and dp[i+k] >= k:
+                return True
+
         return False
