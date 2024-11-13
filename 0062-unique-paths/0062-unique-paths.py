@@ -1,18 +1,12 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        
-        cache = [[0] * n for i in range(m)]
+        prev = [0] * n
 
-        def memoization(r, c, rows, cols, cache):
-            if r == rows or c == cols:
-                return 0
-            if cache[r][c] > 0:
-                return cache[r][c]
-            if r == rows - 1 and c == cols - 1:
-                return 1
-            
+        for i in range(m - 1, -1, -1):
+            cur = [0] * n
+            cur[-1] = 1
+            for j in range(n - 2, -1, -1):
+                cur[j] = cur[j+1] + prev[j]
+            prev = cur
 
-            cache[r][c] = memoization(r + 1, c, rows, cols, cache) + memoization(r, c + 1, rows, cols, cache)
-            return cache[r][c]
-
-        return memoization(0, 0, m, n, cache)
+        return cur[0]
