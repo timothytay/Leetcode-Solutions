@@ -1,19 +1,16 @@
-class Solution(object):
-    def climbStairs(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
+class Solution:
+    def climbStairs(self, n: int) -> int:
         
-        dp = [0, 0]
-        dp[1] = 1
-        dp[0] = 1
-        counter = n - 2
-        while counter >= 0:
-            tmp = dp[0]
-            dp[0] = dp[1] + dp[0]
-            dp[1] = tmp
+        memo = {}
 
-            counter -= 1
-        return dp[0]
-        
+        def climb(n):
+            if n == 0:
+                return 1
+            if n < 0:
+                return 0
+            if n in memo:
+                return memo[n]
+            memo[n] = climb(n-1) + climb(n-2)
+            return memo[n]
+
+        return climb(n)
