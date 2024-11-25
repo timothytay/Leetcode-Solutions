@@ -1,21 +1,10 @@
-import heapq
-
-class Solution(object):
-    def topKFrequent(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         freqs = {}
         for num in nums:
-            freqs[num] = 1 + freqs.get(num, 0)
-        heap = []
-        for num, freq in freqs.items():
-            heapq.heappush(heap, (freq, num))
-            if len(heap) > k:
-                heapq.heappop(heap)
+            freqs[num] = freqs.get(num, 0) + 1
+        sortedFreqs = sorted(freqs.items(), key = lambda x : x[1], reverse = True)
         res = []
-        for freq, num in heap: 
-            res.append(num)
+        for i in range(k):
+            res.append(sortedFreqs[i][0])
         return res
