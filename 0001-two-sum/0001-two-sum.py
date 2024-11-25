@@ -5,9 +5,8 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        seen = {} # number : index
+        seen = {}
         for i, num in enumerate(nums):
             if target - num in seen:
                 return [i, seen[target - num]]
-            else:
-                seen[num] = i
+            seen[num] = i
