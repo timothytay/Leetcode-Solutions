@@ -1,34 +1,23 @@
-class Solution(object):
-    def checkInclusion(self, s1, s2):
-        """
-        :type s1: str
-        :type s2: str
-        :rtype: bool
-        """
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
         if len(s2) < len(s1):
             return False
-        s1dict = {}
+        # s1 length is M and s2 length is N
+        s1Map = {}
         for char in s1:
-            s1dict[char] = 1 + s1dict.get(char, 0)
-        l = 0
-        window = {}
-        have = 0
-        for i in range(len(s1)):
-            window[s2[i]] = 1 + window.get(s2[i], 0)
-            if s2[i] in s1dict and window[s2[i]] == s1dict[s2[i]]:
-                have += 1
-        if have == len(s1dict.keys()):
+            s1Map[char] = s1Map.get(char, 0) + 1
+        # {a:1, d:1, c:1}
+
+        def isPermutation(s1Map, windowMap):
+            for key, value in s1Map.items():
+                if key not in windowMap or windowMap[key] != value:
+                    return False
             return True
 
-        for r in range(len(s1), len(s2)):
-            if s2[l] in s1dict and window[s2[l]] == s1dict[s2[l]]:
-                have -= 1
-            window[s2[l]] -= 1
-            l += 1
-            window[s2[r]] = 1 + window.get(s2[r], 0)
-            if s2[r] in s1dict and window[s2[r]] == s1dict[s2[r]]:
-                have += 1
-            if have == len(s1dict.keys()):
+        for l in range(len(s2) - len(s1) + 1):
+            windowMap = {}
+            for char in s2[l:l+len(s1)]:
+                windowMap[char] = windowMap.get(char, 0) + 1
+            if isPermutation(s1Map, windowMap):
                 return True
-
         return False
