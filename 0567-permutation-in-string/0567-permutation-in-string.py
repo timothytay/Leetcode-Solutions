@@ -1,23 +1,16 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s2) < len(s1):
+        if len(s1) > len(s2):
             return False
-        # s1 length is M and s2 length is N
-        s1Map = {}
-        for char in s1:
-            s1Map[char] = s1Map.get(char, 0) + 1
-        # {a:1, d:1, c:1}
-
-        def isPermutation(s1Map, windowMap):
-            for key, value in s1Map.items():
-                if key not in windowMap or windowMap[key] != value:
-                    return False
-            return True
-
-        for l in range(len(s2) - len(s1) + 1):
-            windowMap = {}
-            for char in s2[l:l+len(s1)]:
-                windowMap[char] = windowMap.get(char, 0) + 1
-            if isPermutation(s1Map, windowMap):
+        count1, count2 = [0] * 26, [0] * 26
+        for i in range(len(s1)):
+            count1[ord(s1[i]) - ord('a')] += 1
+            count2[ord(s2[i]) - ord('a')] += 1
+        l = 0
+        for r in range(len(s1), len(s2)):
+            if count1 == count2:
                 return True
-        return False
+            count2[ord(s2[l]) - ord('a')] -= 1
+            l += 1
+            count2[ord(s2[r]) - ord('a')] += 1
+        return count1 == count2
