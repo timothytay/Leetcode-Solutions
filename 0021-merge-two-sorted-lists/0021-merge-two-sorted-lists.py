@@ -19,4 +19,4 @@ class Solution(object):
             return list1
         else:
             list2.next = self.mergeTwoLists(list1, list2.next)
-            return list2 
+            return list2
