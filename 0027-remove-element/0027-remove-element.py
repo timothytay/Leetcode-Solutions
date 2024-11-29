@@ -26,17 +26,12 @@ class Solution:
         # 2 is the end 
         # so k should be the location they meet + 1
         
-        l, r = 0, len(nums) - 1
-        while l < r:
-            if nums[r] == val:
-                r -= 1
-                continue
-            elif nums[l] == val:
-                nums[l] = nums[r]
-                nums[r] = val
-                r -= 1
-            l += 1
-        
-        if l == len(nums) or nums[l] == val:
-            return l
-        return l + 1
+        reader, writer = 0, 0 
+        while reader < len(nums):
+            if nums[reader] == val:
+                reader += 1
+            else:
+                nums[writer] = nums[reader]
+                reader += 1
+                writer += 1
+        return writer
