@@ -36,10 +36,7 @@ class Solution:
                 nums[r] = val
                 r -= 1
             l += 1
-        k = 0
-        if l < len(nums) and nums[l] != val:
-            k = l + 1
-        else:
-            k = l
         
-        return k
+        if l == len(nums) or nums[l] == val:
+            return l
+        return l + 1
