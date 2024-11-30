@@ -25,6 +25,7 @@ class Solution:
             rightDepth = dfs(root.right)
             if abs(rightDepth - leftDepth) > 1:
                 answer = False
+                return 0
             return 1 + max(leftDepth, rightDepth)
         dfs(root)
         return answer
