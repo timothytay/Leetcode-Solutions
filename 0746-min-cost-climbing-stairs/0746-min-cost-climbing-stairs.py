@@ -5,19 +5,13 @@ class Solution:
         if len(cost) == 1:
             return cost[0]
 
-        cache = {}
-        def climb(i):
-            nonlocal cost
-            if i >= len(cost):
-                return 0
-            if i in cache:
-                return cache[i]
-            cache[i] = cost[i] + min(climb(i+1), climb(i+2))
-            return cache[i]
+        dp = [0] * len(cost)
+        dp[-1] = cost[-1]
+        dp[-2] = cost[-2]
+        for i in range(len(dp) - 3, -1, -1):
+            dp[i] = cost[i] + min(dp[i+1], dp[i+2])
 
-        return min(climb(0), climb(1))
-
-
+        return min(dp[0], dp[1])
             
 
         
