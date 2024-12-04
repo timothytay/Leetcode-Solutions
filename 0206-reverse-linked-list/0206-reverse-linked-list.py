@@ -5,9 +5,18 @@
 #         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head or not head.next:
-            return head
-        reversedList = self.reverseList(head.next)
-        head.next.next = head
-        head.next = None
-        return reversedList
+        # algorithm structure
+        # prev and cur pointers
+        # store cur.next
+        # point cur.next to prev
+        # move prev to cur and cur to cur.next (stored)
+        # when cur out of bounds, we have reached end, so return prev
+
+        prev, cur = None, head
+        while cur:
+            tmp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = tmp
+
+        return prev
