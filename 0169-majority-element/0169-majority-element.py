@@ -1,11 +1,7 @@
-class Solution(object):
-    def majorityElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
         freqs = {}
-        for num in nums:
-            freqs[num] = 1 + freqs.get(num, 0)
-            if freqs[num] > len(nums) / 2:
-                return num
+        for i in range(len(nums)):
+            freqs[nums[i]] = 1 + freqs.get(nums[i], 0)
+            if freqs[nums[i]] > len(nums) // 2:
+                return nums[i]
