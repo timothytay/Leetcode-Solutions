@@ -1,16 +1,11 @@
-import math
-
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        maxProd = nums[0]
-        maximum = nums[0]
-        minimum = nums[0]
+        maxSoFar = minSoFar = maxProduct = nums[0]
 
         for i in range(1, len(nums)):
-            
-            tempMaximum = max(nums[i] * maximum, nums[i] * minimum, nums[i])
-            minimum = min(nums[i] * maximum, nums[i] * minimum, nums[i])
-            
-            maximum = tempMaximum
-            maxProd = max(maximum, maxProd)
-        return maxProd
+            tmp_minSoFar = min(maxSoFar * nums[i], minSoFar * nums[i], nums[i])
+            maxSoFar = max(maxSoFar * nums[i], minSoFar * nums[i], nums[i])
+            minSoFar = tmp_minSoFar
+            maxProduct = max(maxProduct, maxSoFar)
+
+        return max(maxProduct, maxSoFar)
