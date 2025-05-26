@@ -1,31 +1,25 @@
-from collections import defaultdict
-
-class Solution(object):
-    def minWindow(self, s, t):
-        """
-        :type s: str
-        :type t: str
-        :rtype: str
-        """
-        tFreqs = defaultdict(int)
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        
+        ans = ""
+        ansL, ansR = 0, float('inf')
+        tFreqs = {}
         for char in t:
-            tFreqs[char] = tFreqs.get(char, 0) + 1
-        window = defaultdict(int)
-        l = 0
+            tFreqs[char] = 1 + tFreqs.get(char, 0)
+        sFreqs = {}
         have = 0
         need = len(tFreqs)
-        substr = ""
+        l = 0
         for r in range(len(s)):
-            window[s[r]] = window.get(s[r], 0) + 1
-            if s[r] in tFreqs and window[s[r]] == tFreqs[s[r]]:
+            sFreqs[s[r]] = 1 + sFreqs.get(s[r], 0)
+            if s[r] in tFreqs and sFreqs[s[r]] == tFreqs[s[r]]:
                 have += 1
-            while have == len(tFreqs):
-                if r - l + 1 < len(substr) or substr == "":
-                    substr = s[l:r+1]
-                window[s[l]] -= 1
-                if s[l] in tFreqs:
-                    if window[s[l]] < tFreqs[s[l]]:
-                        have -= 1
+            while have == need:
+                if r - l < ansR - ansL:
+                    ansR, ansL = r, l
+                sFreqs[s[l]] -= 1
+                if s[l] in tFreqs and tFreqs[s[l]] == sFreqs[s[l]] + 1:
+                    have -= 1
                 l += 1
-        return substr
-        
+        return s[ansL:ansR + 1] if ansR != float('inf') else ""
+
