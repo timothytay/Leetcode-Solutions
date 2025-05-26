@@ -4,4 +4,6 @@ class Solution:
             if flowerbed[i] == 0 and flowerbed[i-1 if i-1 >= 0 else i] == 0 and flowerbed[i+1 if i+1 < len(flowerbed) else i] == 0:
                 flowerbed[i] = 1
                 n -= 1
+                if n == 0:
+                    return True
         return n <= 0
