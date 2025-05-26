@@ -3,16 +3,16 @@ class Solution:
         ans = []
         dq = deque()
         for i in range(len(nums)):
-            while dq and dq[0][1] <= i - k:
+            while dq and dq[0] <= i - k:
                 dq.popleft()
-            if not dq or dq[-1][0] > nums[i]:
-                dq.append((nums[i], i))
+            if not dq or nums[dq[-1]] > nums[i]:
+                dq.append(i)
             else:
-                while dq and nums[i] >= dq[-1][0]:
+                while dq and nums[i] >= nums[dq[-1]]:
                     dq.pop() 
-                dq.append((nums[i], i))
+                dq.append(i)
             if i >= k - 1:    
-                ans.append(dq[0][0])
+                ans.append(nums[dq[0]])
         return ans
                 
     # remove ones that fall out of window on left
