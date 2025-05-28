@@ -1,17 +1,29 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        res = []
-        def bt(opening, closing, curOpening, cur):
-            
-            if opening > 0:
-                cur += '('
-                bt(opening - 1, closing, curOpening + 1, cur)
-                cur = cur[:-1]
-            if curOpening > 0:
-                cur += ')'
-                bt(opening, closing - 1, curOpening - 1, cur)
-                cur = cur[:-1]
-            if opening == 0 and closing == 0:
-                res.append(cur)
-        bt(n, n, 0, "")
-        return res
+        
+        ans = []
+
+        def validParentheses(par):
+            stack = []
+            for char in par:
+                if char == '(':
+                    stack.append(char)
+                elif char == ')':
+                    if not stack:
+                        return False
+                    else:
+                        stack.pop()
+            return len(stack) == 0
+
+        def generate(cur, opens, closes):
+            if opens == 0 and closes == 0 and validParentheses(cur):
+                ans.append(cur)
+            else:
+                if opens > 0:
+                    generate(cur + '(', opens - 1, closes)
+                if closes > 0:
+                    generate(cur + ')', opens, closes - 1)
+
+        generate("", n, n)
+
+        return ans
