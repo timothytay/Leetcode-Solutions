@@ -22,8 +22,10 @@ class Solution:
 
         cur1, cur2 = head, cur1
         
-        while cur1 and cur1.next != cur2:
+        while cur1 and cur2:
             tmp = cur1.next
             cur1.next = cur2
-            cur1 = cur2
+            cur1 = tmp
+            tmp = cur2.next
+            cur2.next = cur1
             cur2 = tmp
