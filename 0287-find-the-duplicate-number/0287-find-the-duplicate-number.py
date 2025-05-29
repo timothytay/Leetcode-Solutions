@@ -1,7 +1,15 @@
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        for i in range(len(nums)):
-            if nums[abs(nums[i])] < 0:
-                return abs(nums[i])
-            else:
-                nums[nums[i]] *= -1
+        tortoise = nums[0]
+        hare = nums[0]
+        while True:
+            tortoise = nums[tortoise]
+            hare = nums[nums[hare]]
+            if tortoise == hare:
+                break
+        tortoise = nums[0]
+        while tortoise != hare:
+            tortoise = nums[tortoise]
+            hare = nums[hare]
+
+        return hare
