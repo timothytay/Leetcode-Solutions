@@ -4,4 +4,4 @@ class Solution:
             if nums[abs(nums[i])] < 0:
                 return abs(nums[i])
             else:
-                nums[abs(nums[i])] *= -1
+                nums[nums[i]] *= -1
