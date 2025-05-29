@@ -9,33 +9,21 @@ class Solution:
         Do not return anything, modify head in-place instead.
         """
         slow, fast = head, head.next
-        while slow and fast and fast.next:
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-
-        cur = slow.next
-        prev = None
+        
+        cur1, cur2 = slow, slow.next
         slow.next = None
-        while cur:
-            tmp = cur.next
-            cur.next = prev
-            prev = cur
-            cur = tmp
+        while cur1 and cur2:
+            tmp = cur2.next
+            cur2.next = cur1
+            cur1, cur2 = cur2, tmp
+
+        cur1, cur2 = head, cur1
         
-        
-        back = prev
-        front = head
-        dummy = ListNode()
-        cur = dummy
-        while front and back:
-            cur.next = front
-            front = front.next
-            cur = cur.next
-            cur.next = back
-            back = back.next
-            cur = cur.next
-        if front:
-            cur.next = front
-        if back:
-            cur.next = back
-        return dummy.next
+        while cur1 and cur1.next != cur2:
+            tmp = cur1.next
+            cur1.next = cur2
+            cur1 = cur2
+            cur2 = tmp
