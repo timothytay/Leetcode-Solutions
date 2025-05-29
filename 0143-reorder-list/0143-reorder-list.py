@@ -22,7 +22,7 @@ class Solution:
 
         cur1, cur2 = head, cur1
         
-        while cur1 and cur2:
+        while cur1 and cur2: # works for even because at the last step, cur1 moves to null and cur2 points to cur1 after
             tmp = cur1.next
             cur1.next = cur2
             cur1 = tmp
