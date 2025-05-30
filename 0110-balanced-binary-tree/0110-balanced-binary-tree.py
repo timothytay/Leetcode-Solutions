@@ -6,26 +6,14 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        
-        # if leaf node or node is null, return 0
-        # get the max depth or left and right subtrees
-        # if difference is more than 1
-        # return false
-        # otherwise continue for left and right nodes and their subtrees
-
-        # might be interesting to see whether to return a bool or the value of the depth
-
-        
-        answer = True
-        def dfs(root):
-            nonlocal answer
+        self.balanced = True
+        def getDepth(root):
             if not root:
                 return 0
-            leftDepth = dfs(root.left)
-            rightDepth = dfs(root.right)
-            if abs(rightDepth - leftDepth) > 1:
-                answer = False
-                return 0
-            return 1 + max(leftDepth, rightDepth)
-        dfs(root)
-        return answer
+            left = getDepth(root.left)
+            right = getDepth(root.right)
+            if abs(left - right) > 1:
+                self.balanced = False
+            return 1 + max(left, right)
+        getDepth(root)
+        return self.balanced
