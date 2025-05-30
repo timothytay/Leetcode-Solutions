@@ -8,7 +8,7 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         self.balanced = True
         def getDepth(root):
-            if not root:
+            if not root or not self.balanced:
                 return 0
             left = getDepth(root.left)
             right = getDepth(root.right)
