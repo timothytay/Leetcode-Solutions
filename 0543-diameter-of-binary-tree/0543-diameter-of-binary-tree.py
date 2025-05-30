@@ -17,8 +17,6 @@ class Solution:
                 seen[root] = 1 + max(getDepth(root.left), getDepth(root.right))
                 return seen [root]
 
-        maxDiameter = 0
-
         def getDiameter(root):
             if not root:
                 return 0
