@@ -15,6 +15,7 @@ class Solution:
                 heapq.heappush(heapLeft, cannot[timestamp])
                 cannot.pop(timestamp)
             if not heapLeft:
+                timestamp = min(cannot) - 1
                 continue
             cur = heapq.heappop(heapLeft)
             cur[0] += 1
