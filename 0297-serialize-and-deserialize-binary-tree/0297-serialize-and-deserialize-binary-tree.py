@@ -20,9 +20,10 @@ class Codec:
                 arr.append(str(root.val))
                 toString(root.left, arr)
                 toString(root.right, arr)
-            return ' '.join(arr)
-
-        return toString(root, [])
+        
+        arr = []
+        toString(root, arr)
+        return ' '.join(arr)
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
