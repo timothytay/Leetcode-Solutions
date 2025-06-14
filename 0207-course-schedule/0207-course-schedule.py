@@ -1,11 +1,10 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        adj_list = defaultdict(list)
-        node_list = set()
+        adj_list = {i:[] for i in range(numCourses)}
+        
         for course, prereq in prerequisites:
             adj_list[prereq].append(course)
-            node_list.add(course)
-            node_list.add(prereq)
+            
         
         def cycle(node, adj_list, seen, good):
             if node in good:
@@ -20,7 +19,7 @@ class Solution:
             good.add(node)
             return False
 
-        for course in node_list:
+        for course in adj_list.keys():
             if cycle(course, adj_list, set(), set()):
                 return False
         return True
