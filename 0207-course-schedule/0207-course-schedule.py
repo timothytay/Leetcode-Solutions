@@ -1,25 +1,29 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        adj_list = {i:[] for i in range(numCourses)}
-        
-        for course, prereq in prerequisites:
-            adj_list[prereq].append(course)
-            
-        
-        def cycle(node, adj_list, seen, good):
-            if node in good:
-                return False
-            if node in seen:
-                return True
-            seen.add(node)
-            for nei in adj_list[node]:
-                if cycle(nei, adj_list, seen, good):
-                    return True
-            seen.remove(node)
-            good.add(node)
-            return False
+        # Map each course to its prerequisites
+        preMap = {i: [] for i in range(numCourses)}
+        for crs, pre in prerequisites:
+            preMap[crs].append(pre)
 
-        for course in adj_list.keys():
-            if cycle(course, adj_list, set(), set()):
+        # Store all courses along the current DFS path
+        visiting = set()
+
+        def dfs(crs):
+            if crs in visiting:
+                # Cycle detected
+                return False
+            if preMap[crs] == []:
+                return True
+
+            visiting.add(crs)
+            for pre in preMap[crs]:
+                if not dfs(pre):
+                    return False
+            visiting.remove(crs)
+            preMap[crs] = []
+            return True
+
+        for c in range(numCourses):
+            if not dfs(c):
                 return False
         return True
