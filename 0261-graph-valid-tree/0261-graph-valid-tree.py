@@ -1,28 +1,23 @@
-from collections import deque
-class Solution(object):
-    def validTree(self, n, edges):
-        """
-        :type n: int
-        :type edges: List[List[int]]
-        :rtype: bool
-        """
-        adjList = {}
-        for i in range(n):
-            adjList[i] = []
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        # a tree is a connected acyclic graph
+        adj_list = defaultdict(list)
         for a, b in edges:
-            adjList[a].append(b)
-            adjList[b].append(a)
-            
-        def dfs(node, prev, visit):
-
-            if node in visit:
-                return False
+            adj_list[a].append(b)
+            adj_list[b].append(a)
+        
+        def cycle(adj_list, node, path, prev, visit):
+            if node in path:
+                return True
             visit.add(node)
-            for nei in adjList[node]:
+            path.add(node)
+            for nei in adj_list[node]:
                 if nei != prev:
-                    if not dfs(nei, node, visit):
-                        return False
-            return True
+                    if cycle(adj_list, nei, path, node, visit):
+                        return True
+            path.remove(node)
+            return False
 
         visit = set()
-        return dfs(0, float('inf'), visit) and len(visit) == n
+
+        return not cycle(adj_list, 0, set(), -1, visit) and len(visit) == n
