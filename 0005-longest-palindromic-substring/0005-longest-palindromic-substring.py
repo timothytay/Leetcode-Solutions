@@ -4,22 +4,17 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        left, right = 0, 0
-        def getMax(l, r):
-            if l - 1 < 0 or r + 1 >= len(s):
-                return l, r
-            if s[l-1] == s[r+1]:              
-                return getMax(l-1, r+1)
-            return l, r
-            
+        start, end = 0, 0
 
-        for i in range(len(s)):
-            l, r = getMax(i, i)
-            if r - l > right - left:
-                right, left = r, l
-            if i + 1 < len(s) and s[i] == s[i+1]:
-                l, r = getMax(i, i+1)
-                if r - l > right - left:
-                    right, left = r, l
+        for i in range(len(s)-1):
+            for j in range(2):
+                l, r = i, i+j
+                if s[l] == s[r]:
+                    
+                    while l - 1 >= 0 and r + 1 < len(s) and s[l-1] == s[r+1]:
+                        l -= 1
+                        r += 1
+                    if r - l > end - start:
+                        start, end = l, r
 
-        return s[left:right+1]
+        return s[start:end+1]
