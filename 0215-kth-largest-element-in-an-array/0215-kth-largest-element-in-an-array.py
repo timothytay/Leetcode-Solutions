@@ -5,4 +5,4 @@ class Solution:
             heapq.heappush(heap, num)
             if len(heap) > k:
                 heapq.heappop(heap)
-        return heapq.heappop(heap)
+        return heap[0]
