@@ -9,7 +9,7 @@ class Solution:
             return None
         if not head.next:
             return head
-        reversedList = self.reverseList(head.next)
+        reversed_list = self.reverseList(head.next)
         head.next.next = head
         head.next = None
-        return reversedList
+        return reversed_list
