@@ -2,7 +2,7 @@ class Solution:
     def addBinary(self, a: str, b: str) -> str:
         i, j = len(a) - 1, len(b) - 1
         carry = False
-        res = ""
+        res = []
         while i >= 0 or j >= 0:
             result = '0'
             a_digit = a[i] if i >= 0 else '0'
@@ -21,10 +21,11 @@ class Solution:
                 if carry:
                     result = '1'
                 carry = False
-            res = result + res
+            res.append(result)
             i -= 1
             j -= 1
         if carry:
-            res = '1' + res
-        return res
+            res.append('1')
+
+        return ''.join(res[::-1])
 
